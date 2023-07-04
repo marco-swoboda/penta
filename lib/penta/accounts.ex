@@ -187,6 +187,10 @@ defmodule Penta.Accounts do
     User.password_changeset(user, attrs, hash_password: false)
   end
 
+  def change_user_username(user, attrs \\ %{}) do
+    User.username_changeset(user, attrs)
+  end
+
   @doc """
   Updates the user password.
 
@@ -213,6 +217,14 @@ defmodule Penta.Accounts do
       {:ok, %{user: user}} -> {:ok, user}
       {:error, :user, changeset, _} -> {:error, changeset}
     end
+  end
+
+  def update_user_username(user, username) do
+    changeset =
+      user
+      |> User.username_changeset(username)
+
+    Repo.update(changeset)
   end
 
   ## Session

@@ -2,14 +2,15 @@ defmodule PentaWeb.WrongLive do
   use PentaWeb, :live_view
 
   @impl Phoenix.LiveView
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
     {:ok,
      assign(socket,
        score: 0,
        message: "Guess a number.",
        number: Enum.random(1..10),
        items: 1..10,
-       won: false
+       won: false,
+       session_id: session["live_socket_id"]
      )}
   end
 
@@ -28,6 +29,10 @@ defmodule PentaWeb.WrongLive do
         <a href="#" phx-click="guess" phx-value-number={n}><%= n %></a>
       <% end %>
     </h2>
+    <pre>
+      <%= @current_user.email %>
+      <%= @session_id %>
+    </pre>
     """
   end
 
