@@ -1,11 +1,13 @@
 defmodule PentaWeb.WrongLive do
   use PentaWeb, :live_view
 
+  @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
     {:ok,
      assign(socket, score: 0, message: "Guess a number.", number: Enum.random(1..10), won: false)}
   end
 
+  @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
     <h1>Your score: <%= @score %></h1>
