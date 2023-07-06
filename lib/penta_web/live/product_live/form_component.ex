@@ -21,8 +21,8 @@ defmodule PentaWeb.ProductLive.FormComponent do
       >
         <.input field={@form[:name]} type="text" label="Name" />
         <.input field={@form[:description]} type="text" label="Description" />
-        <.input field={@form[:unit_price]} type="number" label="Unit price" step="any" />
-        <.input field={@form[:sku]} type="number" label="Sku" />
+        <.input field={@form[:unit_price]} type="number" label="Unit price" step="0.1" />
+        <.input field={@form[:sku]} type="number" label="SKU" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Product</.button>
         </:actions>
