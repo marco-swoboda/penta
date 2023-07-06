@@ -1,11 +1,20 @@
 defmodule PentaWeb.WrongLive do
   use PentaWeb, :live_view
 
-  def mount(_params, _session, socket) do
+  @impl Phoenix.LiveView
+  def mount(_params, session, socket) do
     {:ok,
-     assign(socket, score: 0, message: "Guess a number.", number: Enum.random(1..10), won: false)}
+     assign(socket,
+       score: 0,
+       message: "Guess a number.",
+       number: Enum.random(1..10),
+       items: 1..10,
+       won: false,
+       session_id: session["live_socket_id"]
+     )}
   end
 
+  @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
     <h1>Your score: <%= @score %></h1>
@@ -16,10 +25,14 @@ defmodule PentaWeb.WrongLive do
       </.button>
     </h2>
     <h2 :if={not @won}>
-      <%= for n <- 1..10 do %>
+      <%= for n <- @items do %>
         <a href="#" phx-click="guess" phx-value-number={n}><%= n %></a>
       <% end %>
     </h2>
+    <pre>
+      <%= @current_user.email %>
+      <%= @session_id %>
+    </pre>
     """
   end
 
@@ -39,7 +52,8 @@ defmodule PentaWeb.WrongLive do
        socket
        |> assign(
          message: "Your guess: #{number}. Wrong. Guess again. ",
-         score: socket.assigns.score - 1
+         items: socket.assigns.items |> Enum.reject(&(&1 == guess)),
+         score: socket.assigns.score + 1
        )}
     end
   end
@@ -47,6 +61,12 @@ defmodule PentaWeb.WrongLive do
   @impl Phoenix.LiveView
   def handle_event("restart", _params, socket) do
     {:noreply,
-     assign(socket, score: 0, message: "Guess a number.", number: Enum.random(1..10), won: false)}
+     assign(socket,
+       score: 0,
+       message: "Guess a number.",
+       number: Enum.random(1..10),
+       items: 1..10,
+       won: false
+     )}
   end
 end
