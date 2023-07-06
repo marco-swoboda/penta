@@ -101,4 +101,20 @@ defmodule Penta.Catalog do
   def change_product(%Product{} = product, attrs \\ %{}) do
     Product.changeset(product, attrs)
   end
+
+  @doc """
+  Decreases the unit price of a product
+
+  ## Examples
+
+    iex> markdown_product(product, 1.3)
+    {:ok, %Producth{}}
+
+    iex> markdown_product(product, -1.2)
+    {:error, %Ecto.Changeset{}}
+  """
+  def markdown_product(%Product{} = product, amount) when is_float(amount) do
+    Product.change_price(product, %{"unit_price" => amount})
+    |> Repo.update()
+  end
 end
