@@ -19,7 +19,7 @@ defmodule Penta.CatalogFixtures do
         description: "some description",
         name: "some name",
         sku: unique_product_sku(),
-        unit_price: 120.5
+        unit_price: "120.500000"
       })
       |> Penta.Catalog.create_product()
 

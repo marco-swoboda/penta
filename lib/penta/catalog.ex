@@ -52,7 +52,7 @@ defmodule Penta.Catalog do
   def create_product(attrs \\ %{}) do
     %Product{}
     |> Product.changeset(attrs)
-    |> Repo.insert!()
+    |> Repo.insert()
   end
 
   @doc """

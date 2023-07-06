@@ -11,7 +11,11 @@ defmodule PentaWeb.UserSessionControllerTest do
     test "logs the user in", %{conn: conn, user: user} do
       conn =
         post(conn, ~p"/users/log_in", %{
-          "user" => %{"email" => user.email, "password" => valid_user_password()}
+          "user" => %{
+            "email" => user.email,
+            "username" => user.username,
+            "password" => valid_user_password()
+          }
         })
 
       assert get_session(conn, :user_token)
@@ -20,7 +24,7 @@ defmodule PentaWeb.UserSessionControllerTest do
       # Now do a logged in request and assert on the menu
       conn = get(conn, ~p"/")
       response = html_response(conn, 200)
-      assert response =~ user.email
+      assert response =~ user.username
       assert response =~ ~p"/users/settings"
       assert response =~ ~p"/users/log_out"
     end
