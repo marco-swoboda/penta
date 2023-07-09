@@ -19,9 +19,6 @@
   </:col>
   <:col :let={{_id, product}} label="SKU"><%= product.sku %></:col>
   <:action :let={{_id, product}}>
-    <div class="sr-only">
-      <.link navigate={~p"/products/#{product}"}>Show</.link>
-    </div>
     <.link patch={~p"/products/#{product}/edit"}>Edit</.link>
   </:action>
   <:action :let={{id, product}}>
